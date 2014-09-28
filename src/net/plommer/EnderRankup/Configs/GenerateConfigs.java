@@ -13,20 +13,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class GenerateConfigs {
 	
-	private static JavaPlugin plugin;
-	private static String filename;
+	private JavaPlugin plugin;
+	private String filename;
 	public GenerateConfigs(JavaPlugin plugin, String filename) {
-		GenerateConfigs.plugin = plugin;
-		GenerateConfigs.filename = filename;
+		this.plugin = plugin;
+		this.filename = filename;
 	}
 	
-	private static FileConfiguration customConfig = null;
-	private static File customConfigFile = null;
+	private FileConfiguration customConfig = null;
+	private File customConfigFile = null;
 	
-	public static void reloadCustomConfig() {
+	public void reloadCustomConfig() {
 	    if (customConfigFile == null) {
-	    	customConfigFile = new File(plugin.getDataFolder().getAbsolutePath(), filename + ".yml");
+	    	customConfigFile = new File(plugin.getDataFolder(), filename + ".yml");
 	    	customConfigFile.getParentFile().mkdir();
+	    	System.out.println(plugin.getDataFolder() + filename + ".yml");
 	    }
 	    customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
 	 
@@ -45,14 +46,14 @@ public class GenerateConfigs {
 	    }
 	}
 	
-	public static FileConfiguration getCustomConfig() {
+	public FileConfiguration getCustomConfig() {
 	    if (customConfig == null) {
 	        reloadCustomConfig();
 	    }
 	    return customConfig;
 	}
 	
-	public static void saveCustomConfig() {
+	public void saveCustomConfig() {
 	    if (customConfig == null || customConfigFile == null) {
 	        return;
 	    }
@@ -63,11 +64,11 @@ public class GenerateConfigs {
 	    }
 	}
 	
-	public static void saveDefaultConfig() {
+	public void saveDefaultConfig() {
 	    if (customConfigFile == null) {
 	        customConfigFile = new File(plugin.getDataFolder(), filename + ".yml");
 	    }
-	    if (!customConfigFile.exists()) {            
+	    if (!customConfigFile.exists()) {    
 	         plugin.saveResource(filename + ".yml", false);
 	     }
 	}
@@ -78,8 +79,7 @@ public class GenerateConfigs {
 		reloadCustomConfig();
 	}
 	
-	public static void save() {
-		saveCustomConfig();
+	public void reload() {
 		reloadCustomConfig();
 	}
 	

@@ -24,9 +24,9 @@ public abstract class BaseCommand {
 	public String usedCmd;
 	public String permission;
 	
-	public boolean run(EnderRankup plugin, CommandSender sender, String cmd, String[] preArgs) {
+	public boolean run(EnderRankup s, CommandSender sender, String cmd, String[] preArgs) {
 		
-		this.plugin = plugin;
+		this.plugin = s;
 		this.sender = sender;
 		this.usedCmd = cmd;
 		
@@ -70,7 +70,7 @@ public abstract class BaseCommand {
 	}
 	
 	public String permission() {
-		return Config.permission_node + this.permission;
+		return Config.permission_node + "." + this.permission;
 	}
 	
 }

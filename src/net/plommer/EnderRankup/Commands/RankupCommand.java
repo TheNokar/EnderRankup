@@ -2,19 +2,19 @@ package net.plommer.EnderRankup.Commands;
 
 import net.plommer.EnderRankup.Methods;
 
-public class TestCommand extends BaseCommand {
+public class RankupCommand extends BaseCommand {
 	
-	public TestCommand() {
+	public RankupCommand() {
 		bePlayer = true;
 		name = "";
 		argLength = 0;
-		usage = "<Warp name>";
-		permission = "ugh";
+		usage = "Rankup";
+		permission = "rankup";
 	}
 	
 	@Override
 	public boolean execute() {
-		Methods.rankup(player);
+		Methods.rankup(player, plugin);
 		return false;
 	}
 }

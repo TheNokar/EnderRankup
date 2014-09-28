@@ -4,6 +4,7 @@ import net.plommer.EnderRankup.Configs.Config;
 import net.plommer.EnderRankup.Utils.Utils;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class Methods {
 	
@@ -15,27 +16,28 @@ public class Methods {
 			if(!currentRank.equals(c[i].toString())) continue;
 			if(i + 2 > c.length) return null;
 			newRank =  c[i+1].toString();
+			break;
 		}
 		return newRank;
 	}
 	
-	public static boolean rankup(Player player) {
+	public static boolean rankup(Player player, JavaPlugin plugin) {
 		String nextRank = nextRank(player);
 		double worth = Config.ranksFile.getDouble("ranks." + nextRank);
 		double money = SetupVault.economy.getBalance(player);
 		if(nextRank == null) {
-			Utils.sendMessage(player, "&cYou are already in the latest rank!");
+			Utils.sendMessage(player, Config.latest_rank);
 			return false;
 		}
 		if(worth > money) {
-			Utils.sendMessage(player, "&cYou don't have enough money to buy that rank!");
+			Utils.sendMessage(player, Config.not_enough_money.replace("{needed}", ""+(worth - money)));
 			return false;
 		}
-		SetupVault.economy.depositPlayer(player, worth);
-		SetupVault.permission.playerRemoveGroup(player, SetupVault.permission.getPrimaryGroup(player));
-		SetupVault.permission.playerAddGroup(player, nextRank);
-		Utils
+		SetupVault.economy.withdrawPlayer(player, worth);
+		SetupVault.permission.playerRemoveGroup(null, player, SetupVault.permission.getPrimaryGroup(player));
+		SetupVault.permission.playerAddGroup(null, player, nextRank);
+		System.out.print(Config.rank_complete);
+		Utils.broadcastMessage(Config.rank_complete.replace("{rank}", nextRank).replace("{player}", player.getName()));
 		return true;
 	}
-	
 }

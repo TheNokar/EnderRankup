@@ -7,3 +7,26 @@ commands:
     rankup:
         description: Default Rankup!
         aliases: [rup, ru]
+permissions:
+    enderrankup.*:
+        description: Give access to all UltraWarps permissions!
+        default: op
+        children:
+          enderrankup.admin: true
+    enderrankup.admin:
+        description: Give admin access
+        default: op
+        children:
+          enderrankup.user: true
+          enderrankup.sign: true
+    enderrankup.user:
+        description: Give user all normal permissions(Rankup)
+        default: true
+        children:
+          enderrankup.rankup: true
+    enderrankup.rankup:
+        description: Allows you to warp
+        default: true
+    enderrankup.sign:
+        description: Allows you to create warp
+        default: op
