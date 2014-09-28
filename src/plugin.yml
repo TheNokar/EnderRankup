@@ -1,0 +1,9 @@
+name: EnderRankup
+main: net.plommer.EnderRankup.EnderRankup
+version: 1.0.0
+author: [TheNokar]
+depend: [Vault]
+commands:
+    rankup:
+        description: Default Rankup!
+        aliases: [rup, ru]

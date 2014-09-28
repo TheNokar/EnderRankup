@@ -1,0 +1,5 @@
+ranks:
+   default: 1000
+   normal: 2000
+   expert: 3000
+   hard: 4000
