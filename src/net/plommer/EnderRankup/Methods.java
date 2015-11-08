@@ -22,22 +22,26 @@ public class Methods {
 	}
 	
 	public static boolean rankup(Player player, JavaPlugin plugin) {
-		String nextRank = nextRank(player);
-		double worth = Config.ranksFile.getDouble("ranks." + nextRank);
-		double money = SetupVault.economy.getBalance(player);
-		if(nextRank == null) {
-			Utils.sendMessage(player, Config.latest_rank);
-			return false;
+		if(SetupVault.permission.hasGroupSupport()) {
+			String nextRank = nextRank(player);
+			double worth = Config.ranksFile.getDouble("ranks." + nextRank);
+			double money = SetupVault.economy.getBalance(player);
+			if(nextRank == null) {
+				Utils.sendMessage(player, Config.latest_rank);
+				return false;
+			}
+			if(worth > money) {
+				Utils.sendMessage(player, Config.not_enough_money.replace("{needed}", ""+(worth - money)));
+				return false;
+			}
+			SetupVault.economy.withdrawPlayer(player, worth);
+			SetupVault.permission.playerRemoveGroup(null, player, SetupVault.permission.getPrimaryGroup(player));
+			SetupVault.permission.playerAddGroup(null, player, nextRank);
+			System.out.print(Config.rank_complete);
+			Utils.broadcastMessage(Config.rank_complete.replace("{rank}", nextRank).replace("{player}", player.getName()));
+		} else {
+			Utils.sendMessage(player, "&cYou don't have group support.");
 		}
-		if(worth > money) {
-			Utils.sendMessage(player, Config.not_enough_money.replace("{needed}", ""+(worth - money)));
-			return false;
-		}
-		SetupVault.economy.withdrawPlayer(player, worth);
-		SetupVault.permission.playerRemoveGroup(null, player, SetupVault.permission.getPrimaryGroup(player));
-		SetupVault.permission.playerAddGroup(null, player, nextRank);
-		System.out.print(Config.rank_complete);
-		Utils.broadcastMessage(Config.rank_complete.replace("{rank}", nextRank).replace("{player}", player.getName()));
 		return true;
 	}
 }
