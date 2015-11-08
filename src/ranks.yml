@@ -1,0 +1,6 @@
+#Note players must be in one of the ranks for the plugin to work.
+ranks:
+   default: 0 #This is the first rank
+   normal: 2000
+   expert: 3000
+   hard: 4000

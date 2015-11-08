@@ -1,0 +1,4 @@
+messages:
+   not_enough_money: '&cYou dont have enough money, you need: &4${needed}'
+   latest_rank: '&cYou are already in the latest rank. Or not in the rank ladder!'
+   rank_complete: '&c{player} &6has been promoted to: &c{rank}'
